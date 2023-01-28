@@ -15,11 +15,15 @@ Also bot will be notify about SPELL on 30 min, 15 min, 5 min and every 5 last mi
 
 ##### Example
 Use:
->> /колдую понос 12:00 @Valera
+> /колдую понос 12:00 @Valera
+
 Result on 11:30
->> понос у @Valera через 30 минут
+
+> понос у @Valera через 30 минут
+
 Result on 12:00
->> Сейчас у @Valera понос
+
+> Сейчас у @Valera понос
 ## -------------------------------------------------
 Ideas, suggestions and advice read here: https://t.me/PajiloyValera
 
