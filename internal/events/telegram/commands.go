@@ -4,7 +4,7 @@ import (
 	"strings"
 )
 
-//TODO: declare command here
+// TODO: declare command here
 const (
 	//cmd
 	HelpCmd = "/help"
@@ -20,8 +20,9 @@ func (w *Worker) doCommand(text string, chatId int, username string) error {
 	command := text[0] == '/'
 	if command {
 		cmd := textSlice[0]
-		keys := make([]string, len(textSlice)-1)
 
+		hasKeys := len(textSlice) > 1
+		keys := make([]string, len(textSlice)-1)
 		for i := 0; i < len(textSlice)-1; i++ {
 			keys[i] = textSlice[i+1]
 		}
@@ -29,8 +30,10 @@ func (w *Worker) doCommand(text string, chatId int, username string) error {
 		//TODO: Add commands here
 		switch cmd {
 		case HelpCmd:
-			if keys[0] == RealKey {
-				w.tg.SendMessage(chatId, msgRealHelp)
+			if hasKeys {
+				if keys[0] == RealKey {
+					w.tg.SendMessage(chatId, msgRealHelp)
+				}
 			} else {
 				w.tg.SendMessage(chatId, msgHelp)
 			}
