@@ -8,6 +8,7 @@ import (
 const (
 	//cmd
 	HelpCmd = "/help"
+	DotaCmd = "/dota"
 
 	//key
 	RealKey = "real"
@@ -16,31 +17,34 @@ const (
 func (w *Worker) doCommand(text string, chatId int, username string) error {
 	text = strings.TrimSpace(text)
 	textSlice := strings.Split(text, " ")
+	if text != "" {
 
-	command := text[0] == '/'
-	if command {
-		cmd := textSlice[0]
+		command := text[0] == '/'
+		if command {
+			cmd := textSlice[0]
 
-		hasKeys := len(textSlice) > 1
-		keys := make([]string, len(textSlice)-1)
-		for i := 0; i < len(textSlice)-1; i++ {
-			keys[i] = textSlice[i+1]
-		}
-
-		//TODO: Add commands here
-		switch cmd {
-		case HelpCmd:
-			if hasKeys {
-				if keys[0] == RealKey {
-					w.tg.SendMessage(chatId, msgRealHelp)
-				}
-			} else {
-				w.tg.SendMessage(chatId, msgHelp)
+			hasKeys := len(textSlice) > 1
+			keys := make([]string, len(textSlice)-1)
+			for i := 0; i < len(textSlice)-1; i++ {
+				keys[i] = textSlice[i+1]
 			}
-		default:
-			w.tg.SendMessage(chatId, msgUnknown)
+
+			//TODO: Add commands here
+			switch cmd {
+			case HelpCmd:
+				if hasKeys {
+					if keys[0] == RealKey {
+						w.tg.SendMessage(chatId, msgRealHelp)
+					}
+				} else {
+					w.tg.SendMessage(chatId, msgHelp)
+				}
+			case DotaCmd:
+				w.tg.SendMessage(chatId, msgGoDota)
+			default:
+				w.tg.SendMessage(chatId, msgUnknown)
+			}
 		}
 	}
-
 	return nil
 }
