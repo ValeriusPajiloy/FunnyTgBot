@@ -26,7 +26,7 @@ func main() {
 
 	var token string
 	var exist bool
-	if token, exist = os.LookupEnv("APP_ADDR"); !exist {
+	if token, exist = os.LookupEnv("TG_TOKEN"); !exist {
 		log.Fatal("", ErrTokenNotExist)
 	}
 
@@ -43,7 +43,7 @@ func main() {
 	}
 }
 
-//Get token as flag
+// Get token as flag
 func mustToken() string {
 	token := flag.String("token", "", "token for access to tgApi")
 	flag.Parse()
