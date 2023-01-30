@@ -3,6 +3,7 @@ A simple pet project for learning the Go language.
 Telegram bot with rofl functionality
 ## -------------------------------------------------
 ### TODO:
+### ---------------------
 #### Notification module.
 Funny notification image like magik spells.
 Use < /колдую SPELL TIME TARGET >
@@ -25,12 +26,14 @@ Result on 12:00
 
 > Сейчас у @Valera понос
 
+### -------------------------------------------------
 #### Tag all to game module.
 Teg all by one command like:
 Use < /dota >
 
 Response by bot
 > @Valera, @Kolya, @Max, @Egor го в доту
+### -------------------------------------------------
 
 
 ## -------------------------------------------------
