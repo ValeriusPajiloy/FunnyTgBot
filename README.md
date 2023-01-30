@@ -6,7 +6,8 @@ Telegram bot with rofl functionality
 ### ---------------------
 #### Notification module.
 Funny notification image like magik spells.
-Use 
+Use
+
 < /колдую SPELL TIME TARGET >
 
 In current TIME bot write:
@@ -31,6 +32,7 @@ Result on 12:00
 #### Tag all to game module.
 Teg all by one command.
 Use 
+
 < /dota >
 
 Response by bot
