@@ -24,9 +24,20 @@ Result on 11:30
 Result on 12:00
 
 > Сейчас у @Valera понос
+
+#### Tag all to game module.
+Teg all by one command like:
+Use < /dota >
+
+Response by bot
+> @Valera, @Kolya, @Max, @Egor го в доту
+
+
 ## -------------------------------------------------
 Many thanks to Nikolai Tuzov, I learned a lot from his "Telegram Bot in Golang" playlist, examples of links below
+
 https://www.youtube.com/playlist?list=PLFAQFisfyqlWDwouVTUztKX2wUjYQ4T3l
+
 https://github.com/GolangLessons/Read-Adviser-Bot/tree/lessons
 
 Ideas, suggestions and advice read here: https://t.me/PajiloyValera
