@@ -2,7 +2,7 @@
 A simple pet project for learning the Go language. 
 Telegram bot with rofl functionality
 ## -------------------------------------------------
-### TODO:
+### IN TEST:
 ### ---------------------
 #### Notification module.
 Funny notification image like magik spells.
@@ -27,7 +27,9 @@ Result after 45min
 
 > Сейчас у @Valera понос
 
-### -------------------------------------------------
+### ---------------------
+### TODO:
+### ---------------------
 #### Tag all to game module.
 Teg all by one command.
 Use 
@@ -35,8 +37,16 @@ Use
 
 Response by bot
 > @Valera, @Kolya, @Max, @Egor го в доту
-### -------------------------------------------------
+### ---------------------
 
+####Chinese social ranking
+
+The idea is to store a rating for each user.
+
+When a user writes messages that combine good words and the word China, the party - the rating goes up.
+When a user writes a message that combines bad words and the words China, the party, the rating goes down.
+
+on the /rating command, the bot displays the user's rating.
 
 ## -------------------------------------------------
 Many thanks to Nikolai Tuzov, I learned a lot from his "Telegram Bot in Golang" playlist, examples of links below
