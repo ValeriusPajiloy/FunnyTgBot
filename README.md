@@ -9,7 +9,7 @@ Funny notification image like magik spells.
 Use
 > /колдую SPELL TIME TARGET 
 
-In current TIME bot write:
+After the specified TIME of minutes bot write:
 > Сейчас у TARGET SPELL
 
 Also bot will be notify about SPELL on 30 min, 15 min, 5 min and every 5 last min before spell time like:
@@ -17,13 +17,13 @@ Also bot will be notify about SPELL on 30 min, 15 min, 5 min and every 5 last mi
 
 ##### Example
 Use:
-> /колдую понос 12:00 @Valera
+> /колдую понос 45 @Valera
 
-Result on 11:30
+Result after 15min
 
 > понос у @Valera через 30 минут
 
-Result on 12:00
+Result after 45min
 
 > Сейчас у @Valera понос
 
