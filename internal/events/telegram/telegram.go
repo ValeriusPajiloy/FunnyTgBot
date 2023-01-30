@@ -13,17 +13,20 @@ var ErrUnknownMetaType = errors.New("UnknownMetaType")
 
 type Worker struct {
 	tg     *telegram.Client
+	notify *Notification
 	offset int
 }
 
 type Meta struct {
-	ChatId   int
-	Username string
+	ChatId          int
+	SenderName      string
+	ActiveUsernames []string
 }
 
-func NewWorker(tg *telegram.Client) *Worker {
+func NewWorker(tg *telegram.Client, notify *Notification) *Worker {
 	return &Worker{
-		tg: tg,
+		tg:     tg,
+		notify: notify,
 	}
 }
 
@@ -40,7 +43,9 @@ func (w *Worker) Fetch(limit int) ([]events.Event, error) {
 	res := make([]events.Event, 0, len(updates))
 
 	for _, update := range updates {
-		res = append(res, event(update))
+		if update.Message != nil {
+			res = append(res, event(update))
+		}
 	}
 
 	w.offset = updates[len(updates)-1].ID + 1
@@ -64,7 +69,7 @@ func (w *Worker) processMessage(event events.Event) error {
 		return e.Wrap("cant processMessage ", err)
 	}
 
-	if err := w.doCommand(event.Text, meta.ChatId, meta.Username); err != nil {
+	if err := w.doCommand(event, meta); err != nil {
 		return e.Wrap("cant processMessage", err)
 	}
 	return nil
@@ -87,8 +92,9 @@ func event(update telegram.Update) events.Event {
 
 	if fetchType == events.Message {
 		res.Meta = Meta{
-			ChatId:   update.Message.Chat.ID,
-			Username: update.Message.From.Username,
+			ChatId:          update.Message.Chat.ID,
+			SenderName:      update.Message.From.Username,
+			ActiveUsernames: update.Message.Chat.ActiveUsernames,
 		}
 	}
 	return res

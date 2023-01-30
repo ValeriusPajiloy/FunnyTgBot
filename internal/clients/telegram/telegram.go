@@ -2,7 +2,7 @@ package telegram
 
 import (
 	"encoding/json"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"path"
@@ -11,8 +11,10 @@ import (
 )
 
 const (
-	getUpdatesMethod  = "getUpdates"
-	sendMessageMethod = "sendMessage"
+	getUpdatesMethod            = "getUpdates"
+	sendMessageMethod           = "sendMessage"
+	getChatMethod               = "getChat"
+	getChatAdministratorsMethod = "getChatAdministrators"
 )
 
 // Client work with TelegramApi
@@ -30,7 +32,7 @@ func NewClient(host string, token string) Client {
 	}
 }
 
-//Send message to tgApi
+// Send message to tgApi
 func (c *Client) SendMessage(chatID int, text string) error {
 	q := url.Values{}
 	q.Add("chat_id", strconv.Itoa(chatID))
@@ -42,7 +44,7 @@ func (c *Client) SendMessage(chatID int, text string) error {
 	return nil
 }
 
-//Get updates from tgApi
+// Get updates from tgApi
 func (c *Client) Updates(offset int, limit int) ([]Update, error) {
 	q := url.Values{}
 	q.Add("offset", strconv.Itoa(offset))
@@ -84,7 +86,7 @@ func (c *Client) doRequest(method string, query url.Values) ([]byte, error) {
 		return nil, e.Wrap("cant do request ", err)
 	}
 
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return nil, e.Wrap("cant do request ", err)
 	}

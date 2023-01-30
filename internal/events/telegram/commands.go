@@ -1,21 +1,31 @@
 package telegram
 
 import (
+	"fmt"
+	"strconv"
 	"strings"
+	"tgbot/internal/events"
 )
 
 // TODO: declare command here
 const (
 	//cmd
 	HelpCmd = "/help"
-	DotaCmd = "/dota"
+	//game
+	DotaCmd    = "/dota"
+	MainCmd    = "/main"
+	ValheimCmd = "/valheim"
+	//notifications
+	SpellCmd = "/колдую"
+)
 
+const (
 	//key
 	RealKey = "real"
 )
 
-func (w *Worker) doCommand(text string, chatId int, username string) error {
-	text = strings.TrimSpace(text)
+func (w *Worker) doCommand(event events.Event, meta Meta) error {
+	text := strings.TrimSpace(event.Text)
 	textSlice := strings.Split(text, " ")
 	if text != "" {
 
@@ -34,15 +44,48 @@ func (w *Worker) doCommand(text string, chatId int, username string) error {
 			case HelpCmd:
 				if hasKeys {
 					if keys[0] == RealKey {
-						w.tg.SendMessage(chatId, msgRealHelp)
+						w.tg.SendMessage(meta.ChatId, msgRealHelp)
 					}
 				} else {
-					w.tg.SendMessage(chatId, msgHelp)
+					w.tg.SendMessage(meta.ChatId, msgHelp)
 				}
-			case DotaCmd:
-				w.tg.SendMessage(chatId, msgGoDota)
+
+			case SpellCmd:
+				if hasKeys {
+					if len(keys) < 3 {
+						if keys[0] == "help" {
+							w.tg.SendMessage(meta.ChatId, msgHelpSpell)
+						} else {
+							w.tg.SendMessage(meta.ChatId, msgNotFullSpell)
+						}
+					} else {
+						spell := keys[0]
+						timeMin, err := strconv.Atoi(keys[1])
+						target := keys[2]
+						if err != nil {
+							w.tg.SendMessage(meta.ChatId, msgNotFullSpell)
+						} else {
+							w.tg.SendMessage(meta.ChatId, fmt.Sprintf(msgSpell, timeMin, target, spell))
+							w.notify.CreateNotifies(spell, timeMin, target, meta.ChatId)
+						}
+					}
+				} else {
+					w.tg.SendMessage(meta.ChatId, msgEmptySpell)
+				}
+			// case DotaCmd:
+			// 	tegAll := ""
+			// 	//TODO: think about select all users
+			// 	w.tg.SendMessage(meta.ChatId, fmt.Sprintf("%s %s", tegAll, msgGoDota))
+			// case MainCmd:
+			// 	tegAll := ""
+			// 	//TODO: think about select all users
+			// 	w.tg.SendMessage(meta.ChatId, fmt.Sprintf("%s %s", tegAll, msgGoMain))
+			// case ValheimCmd:
+			// 	tegAll := ""
+			// 	//TODO: think about select all users
+			// 	w.tg.SendMessage(meta.ChatId, fmt.Sprintf("%s %s", tegAll, msgGoValheim))
 			default:
-				w.tg.SendMessage(chatId, msgUnknown)
+				w.tg.SendMessage(meta.ChatId, msgUnknown)
 			}
 		}
 	}

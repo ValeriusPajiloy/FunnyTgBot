@@ -2,7 +2,6 @@ package main
 
 import (
 	"errors"
-	"flag"
 	"log"
 	"os"
 	tgclient "tgbot/internal/clients/telegram"
@@ -32,7 +31,8 @@ func main() {
 
 	tgClient := tgclient.NewClient(tgBotHost, token)
 
-	eventsWorker := telegram.NewWorker(&tgClient)
+	notification := telegram.NewNotification(&tgClient)
+	eventsWorker := telegram.NewWorker(&tgClient, notification)
 
 	log.Print("service started")
 
@@ -44,11 +44,11 @@ func main() {
 }
 
 // Get token as flag
-func mustToken() string {
-	token := flag.String("token", "", "token for access to tgApi")
-	flag.Parse()
-	if *token == "" {
-		log.Fatal("token is null")
-	}
-	return *token
-}
+// func mustToken() string {
+// 	token := flag.String("token", "", "token for access to tgApi")
+// 	flag.Parse()
+// 	if *token == "" {
+// 		log.Fatal("token is null")
+// 	}
+// 	return *token
+// }
