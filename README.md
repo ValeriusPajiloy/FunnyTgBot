@@ -39,7 +39,7 @@ Response by bot
 > @Valera, @Kolya, @Max, @Egor го в доту
 ### ---------------------
 
-####Chinese social ranking
+#### Chinese social ranking
 
 The idea is to store a rating for each user.
 
