@@ -28,8 +28,7 @@ Result on 12:00
 
 ### -------------------------------------------------
 #### Tag all to game module.
-Teg all by one command like:
-
+Teg all by one command.
 Use < /dota >
 
 Response by bot
