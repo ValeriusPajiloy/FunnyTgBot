@@ -1,27 +1,8 @@
 package telegram
 
 import (
-	"fmt"
-	"strconv"
 	"strings"
 	"tgbot/internal/events"
-)
-
-// TODO: declare command here
-const (
-	//cmd
-	HelpCmd = "/help"
-	//game
-	DotaCmd    = "/dota"
-	MainCmd    = "/main"
-	ValheimCmd = "/valheim"
-	//notifications
-	SpellCmd = "/колдую"
-)
-
-const (
-	//key
-	RealKey = "real"
 )
 
 func (w *Worker) doCommand(event events.Event, meta Meta) error {
@@ -41,37 +22,20 @@ func (w *Worker) doCommand(event events.Event, meta Meta) error {
 
 			//TODO: Add commands here
 			switch cmd {
-			case HelpCmd:
+			case START_CMD:
+				w.tg.SendMessage(meta.ChatId, MSG_HELP)
+			case HELP_CMD:
 				if hasKeys {
-					if keys[0] == RealKey {
-						w.tg.SendMessage(meta.ChatId, msgRealHelp)
+					if keys[0] == REAL_KEY {
+						w.tg.SendMessage(meta.ChatId, MSG_REAL_HELP)
 					}
 				} else {
-					w.tg.SendMessage(meta.ChatId, msgHelp)
+					w.tg.SendMessage(meta.ChatId, MSG_HELP)
 				}
 
-			case SpellCmd:
-				if hasKeys {
-					if len(keys) < 3 {
-						if keys[0] == "help" {
-							w.tg.SendMessage(meta.ChatId, msgHelpSpell)
-						} else {
-							w.tg.SendMessage(meta.ChatId, msgNotFullSpell)
-						}
-					} else {
-						spell := keys[0]
-						timeMin, err := strconv.Atoi(keys[1])
-						target := keys[2]
-						if err != nil {
-							w.tg.SendMessage(meta.ChatId, msgNotFullSpell)
-						} else {
-							w.tg.SendMessage(meta.ChatId, fmt.Sprintf(msgSpell, timeMin, target, spell))
-							w.notify.CreateNotifies(spell, timeMin, target, meta.ChatId)
-						}
-					}
-				} else {
-					w.tg.SendMessage(meta.ChatId, msgEmptySpell)
-				}
+			case SPELL_CMD:
+				w.notify.CreateAnswer(hasKeys, keys, meta.ChatId)
+
 			// case DotaCmd:
 			// 	tegAll := ""
 			// 	//TODO: think about select all users
@@ -85,7 +49,7 @@ func (w *Worker) doCommand(event events.Event, meta Meta) error {
 			// 	//TODO: think about select all users
 			// 	w.tg.SendMessage(meta.ChatId, fmt.Sprintf("%s %s", tegAll, msgGoValheim))
 			default:
-				w.tg.SendMessage(meta.ChatId, msgUnknown)
+				w.tg.SendMessage(meta.ChatId, MSG_UNKNOWN)
 			}
 		}
 	}

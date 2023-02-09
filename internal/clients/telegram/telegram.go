@@ -7,6 +7,7 @@ import (
 	"net/url"
 	"path"
 	"strconv"
+	mongodb "tgbot/internal/storage/mongo_db"
 	"tgbot/lib/e"
 )
 
@@ -22,13 +23,15 @@ type Client struct {
 	host     string
 	basePath string
 	client   http.Client
+	repo     *mongodb.Repository
 }
 
-func NewClient(host string, token string) Client {
+func NewClient(host string, token string, repo *mongodb.Repository) Client {
 	return Client{
 		host:     host,
 		basePath: newBasePath(token),
 		client:   http.Client{},
+		repo:     repo,
 	}
 }
 

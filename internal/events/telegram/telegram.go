@@ -5,6 +5,7 @@ import (
 
 	"tgbot/internal/clients/telegram"
 	"tgbot/internal/events"
+	"tgbot/internal/modules/notification"
 	"tgbot/lib/e"
 )
 
@@ -13,7 +14,7 @@ var ErrUnknownMetaType = errors.New("UnknownMetaType")
 
 type Worker struct {
 	tg     *telegram.Client
-	notify *Notification
+	notify *notification.Notification
 	offset int
 }
 
@@ -23,7 +24,7 @@ type Meta struct {
 	ActiveUsernames []string
 }
 
-func NewWorker(tg *telegram.Client, notify *Notification) *Worker {
+func NewWorker(tg *telegram.Client, notify *notification.Notification) *Worker {
 	return &Worker{
 		tg:     tg,
 		notify: notify,
