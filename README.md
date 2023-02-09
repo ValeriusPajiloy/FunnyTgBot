@@ -2,7 +2,7 @@
 A simple pet project for learning the Go language. 
 Telegram bot with rofl functionality
 ## -------------------------------------------------
-### IN TEST:
+### READY:
 ### ---------------------
 #### Notification module.
 Funny notification image like magik spells.
@@ -20,25 +20,36 @@ Use:
 > /колдую понос 45 @Valera
 
 Result after 15min
-
 > понос у @Valera через 30 минут
 
 Result after 45min
-
 > Сейчас у @Valera понос
 
 ### ---------------------
-### TODO:
+### IN WORK:
 ### ---------------------
 #### Tag all to game module.
-Teg all by one command.
-Use 
-> /dota 
+Usage:
+For tag all in group:
+> /go *group*
 
-Response by bot
-> @Valera, @Kolya, @Max, @Egor го в доту
+Add new group:
+> /go addgroup *group*
+	
+Get all groups for chat
+> /go groups
+
+Add users in group:
+> /go add *group* *userTag*(maybe more one)`
+
+Exaple:
+> /go dota
+
+Answer:
+> го в dota @Valera @Max @Egor @Kolya
 ### ---------------------
-
+### IN PLANS:
+### ---------------------
 #### Chinese social ranking
 
 The idea is to store a rating for each user.
