@@ -30,6 +30,7 @@ Result after 45min
 ### ---------------------
 #### Tag all to game module.
 Usage:
+
 For tag all in group:
 > /go *group*
 
@@ -43,6 +44,7 @@ Add users in group:
 > /go add *group* *userTag*(maybe more one)`
 
 Example:
+
 Your message:
 > /go dota
 
