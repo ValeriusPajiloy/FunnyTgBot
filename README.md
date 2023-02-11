@@ -26,11 +26,10 @@ Result after 45min
 > Сейчас у @Valera понос
 
 ### ---------------------
-### IN WORK:
+### IN TESTING:
 ### ---------------------
 #### Tag all to game module.
 Usage:
-
 For tag all in group:
 > /go *group*
 
@@ -43,9 +42,7 @@ Get all groups for chat
 Add users in group:
 > /go add *group* *userTag*(maybe more one)`
 
-Example:
-
-Your message:
+Exaple:
 > /go dota
 
 Answer:

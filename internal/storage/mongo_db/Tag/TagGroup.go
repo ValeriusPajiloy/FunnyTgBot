@@ -7,6 +7,7 @@ import (
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 type TagGroup struct {
@@ -21,11 +22,17 @@ func NewTagGroup(db *mongo.Client) *TagGroup {
 
 func (t *TagGroup) Create(ctx context.Context, name string, chatID int) {
 	collection := t.db.Database("Tag").Collection("Group")
-	result, err := collection.InsertOne(ctx, bson.D{{Key: "name", Value: name}, {Key: "chatID", Value: chatID}})
-	if err != nil {
-		log.Printf("%s", err)
+	filter := bson.D{{Key: "name", Value: name}, {Key: "chatID", Value: chatID}}
+	found := collection.FindOne(ctx, filter, options.FindOne())
+	TagGroup := tag.TagGroup{}
+	err := found.Decode(&TagGroup)
+	if err != nil && err.Error() == "mongo: no documents in result" {
+		result, err := collection.InsertOne(ctx, bson.D{{Key: "name", Value: name}, {Key: "chatID", Value: chatID}})
+		if err != nil {
+			log.Printf("%s", err)
+		}
+		log.Println(result)
 	}
-	log.Println(result)
 }
 func (t *TagGroup) GetAll(ctx context.Context, chatID int) ([]string, error) {
 	result := []string{}

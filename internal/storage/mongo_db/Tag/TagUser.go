@@ -2,10 +2,12 @@ package tag
 
 import (
 	"context"
+	"log"
 	tag "tgbot/internal/mapping/Tag"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 type TagUser struct {
@@ -18,9 +20,19 @@ func NewTagUser(db *mongo.Client) *TagUser {
 	}
 }
 
-func (t *TagUser) Create(ctx context.Context, tag string, nameGroup string, chatID int) {
+func (t *TagUser) Create(ctx context.Context, tagStr string, nameGroup string, chatID int) {
 	collection := t.db.Database("Tag").Collection("User")
-	collection.InsertOne(ctx, bson.D{{Key: "tag", Value: tag}, {Key: "nameGroup", Value: nameGroup}, {Key: "chatID", Value: chatID}})
+	filter := bson.D{{Key: "tag", Value: tagStr}, {Key: "nameGroup", Value: nameGroup}, {Key: "chatID", Value: chatID}}
+	found := collection.FindOne(ctx, filter, options.FindOne())
+	TagUser := tag.TagUser{}
+	err := found.Decode(&TagUser)
+	if err != nil && err.Error() == "mongo: no documents in result" {
+		result, err := collection.InsertOne(ctx, bson.D{{Key: "tag", Value: tagStr}, {Key: "nameGroup", Value: nameGroup}, {Key: "chatID", Value: chatID}})
+		if err != nil {
+			log.Printf("%s", err)
+		}
+		log.Println(result)
+	}
 }
 func (t *TagUser) GetAllForGroup(ctx context.Context, nameGroup string, chatID int) ([]string, error) {
 	result := []string{}
