@@ -1,6 +1,7 @@
 package event_consumer
 
 import (
+	"context"
 	"log"
 	"tgbot/internal/events"
 	"time"
@@ -20,7 +21,7 @@ func NewConsumer(fetcher events.Fetcher, processor events.Processor, batchSize i
 	}
 }
 
-func (c Consumer) Start() error {
+func (c Consumer) Start(ctx context.Context) error {
 	for {
 		gotEvents, err := c.fetcher.Fetch(c.batchSize)
 		if err != nil {
@@ -35,7 +36,7 @@ func (c Consumer) Start() error {
 			continue
 		}
 
-		if err := c.handleEvents(gotEvents); err != nil {
+		if err := c.handleEvents(ctx, gotEvents); err != nil {
 			log.Print(err)
 
 			continue
@@ -43,11 +44,11 @@ func (c Consumer) Start() error {
 	}
 }
 
-func (c *Consumer) handleEvents(events []events.Event) error {
+func (c *Consumer) handleEvents(ctx context.Context, events []events.Event) error {
 	for _, event := range events {
 		log.Printf("got new event: %s", event.Text)
 
-		if err := c.processor.Process(event); err != nil {
+		if err := c.processor.Process(ctx, event); err != nil {
 			log.Printf("can't handle event: %s", err.Error())
 
 			continue

@@ -1,11 +1,13 @@
 package telegram
 
 import (
+	"context"
 	"errors"
 
 	"tgbot/internal/clients/telegram"
 	"tgbot/internal/events"
 	"tgbot/internal/modules/notification"
+	tagall "tgbot/internal/modules/tag_all"
 	"tgbot/lib/e"
 )
 
@@ -15,6 +17,7 @@ var ErrUnknownMetaType = errors.New("UnknownMetaType")
 type Worker struct {
 	tg     *telegram.Client
 	notify *notification.Notification
+	tagall *tagall.TagAll
 	offset int
 }
 
@@ -24,10 +27,11 @@ type Meta struct {
 	ActiveUsernames []string
 }
 
-func NewWorker(tg *telegram.Client, notify *notification.Notification) *Worker {
+func NewWorker(tg *telegram.Client, notify *notification.Notification, tagall *tagall.TagAll) *Worker {
 	return &Worker{
 		tg:     tg,
 		notify: notify,
+		tagall: tagall,
 	}
 }
 
@@ -54,23 +58,23 @@ func (w *Worker) Fetch(limit int) ([]events.Event, error) {
 	return res, nil
 }
 
-func (w *Worker) Process(event events.Event) error {
+func (w *Worker) Process(ctx context.Context, event events.Event) error {
 	switch event.Type {
 	case events.Message:
-		w.processMessage(event)
+		w.processMessage(ctx, event)
 	case events.Unknown:
 		return e.Wrap("cant Process", ErrUnknownMessageType)
 	}
 	return nil
 }
 
-func (w *Worker) processMessage(event events.Event) error {
+func (w *Worker) processMessage(ctx context.Context, event events.Event) error {
 	meta, err := meta(event)
 	if err != nil {
 		return e.Wrap("cant processMessage ", err)
 	}
 
-	if err := w.doCommand(event, meta); err != nil {
+	if err := w.doCommand(ctx, event, meta); err != nil {
 		return e.Wrap("cant processMessage", err)
 	}
 	return nil

@@ -38,15 +38,15 @@ func (t *TagAll) CreateAnswer(ctx context.Context, hasKeys bool, keys []string, 
 					t.tg.SendMessage(chatId, MSG_UNDEFIND_GROUP_TEG_ALL)
 				}
 			}
-		} else if len(keys) > 2 {
+		} else {
 			switch keys[0] {
 			case "addgroup":
 				newGroup := keys[1]
 				t.createGroup(ctx, newGroup, chatId)
 			case "add":
-				if len(keys) > 3 {
-					gropName := keys[2]
-					for i := 3; i < len(keys); i++ {
+				if len(keys) > 2 {
+					gropName := keys[1]
+					for i := 2; i < len(keys); i++ {
 						userTag := keys[i]
 						t.addUserInGroup(ctx, userTag, gropName, chatId)
 					}
@@ -85,6 +85,7 @@ func (t *TagAll) groupList(ctx context.Context, chatId int) *[]string {
 func (t *TagAll) createGroup(ctx context.Context, newGroup string, chatId int) {
 	t.repo.TagGroup.Create(ctx, newGroup, chatId)
 }
+
 func (t *TagAll) tagListString(ctx context.Context, group string, chatId int) string {
 	tagListString := "В группе пусто"
 	tagList, err := t.repo.TagUser.GetAllForGroup(ctx, group, chatId)

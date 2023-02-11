@@ -1,11 +1,12 @@
 package telegram
 
 import (
+	"context"
 	"strings"
 	"tgbot/internal/events"
 )
 
-func (w *Worker) doCommand(event events.Event, meta Meta) error {
+func (w *Worker) doCommand(ctx context.Context, event events.Event, meta Meta) error {
 	text := strings.TrimSpace(event.Text)
 	textSlice := strings.Split(text, " ")
 	if text != "" {
@@ -36,10 +37,9 @@ func (w *Worker) doCommand(event events.Event, meta Meta) error {
 			case SPELL_CMD:
 				w.notify.CreateAnswer(hasKeys, keys, meta.ChatId)
 
-			// case DotaCmd:
-			// 	tegAll := ""
-			// 	//TODO: think about select all users
-			// 	w.tg.SendMessage(meta.ChatId, fmt.Sprintf("%s %s", tegAll, msgGoDota))
+			case TAG_ALL_CMD:
+				w.tagall.CreateAnswer(ctx, hasKeys, keys, meta.ChatId)
+
 			// case MainCmd:
 			// 	tegAll := ""
 			// 	//TODO: think about select all users

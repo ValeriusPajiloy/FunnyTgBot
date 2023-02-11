@@ -25,5 +25,6 @@ type Repository struct {
 func NewRepository(mongo *mongo.Client) *Repository {
 	return &Repository{
 		TagGroup: tag.NewTagGroup(mongo),
+		TagUser:  tag.NewTagUser(mongo),
 	}
 }

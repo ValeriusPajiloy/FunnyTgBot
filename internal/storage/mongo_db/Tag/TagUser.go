@@ -2,7 +2,9 @@ package tag
 
 import (
 	"context"
+	tag "tgbot/internal/mapping/Tag"
 
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
@@ -17,11 +19,32 @@ func NewTagUser(db *mongo.Client) *TagUser {
 }
 
 func (t *TagUser) Create(ctx context.Context, tag string, nameGroup string, chatID int) {
-
+	collection := t.db.Database("Tag").Collection("User")
+	collection.InsertOne(ctx, bson.D{{Key: "tag", Value: tag}, {Key: "nameGroup", Value: nameGroup}, {Key: "chatID", Value: chatID}})
 }
 func (t *TagUser) GetAllForGroup(ctx context.Context, nameGroup string, chatID int) ([]string, error) {
+	result := []string{}
 
-	results := []string{}
+	filter := bson.D{{Key: "chatID", Value: chatID}, {Key: "nameGroup", Value: nameGroup}}
+	collection := t.db.Database("Tag").Collection("User")
 
-	return results, nil
+	cur, err := collection.Find(ctx, filter)
+	if err != nil {
+		return nil, err
+	}
+	defer cur.Close(ctx)
+
+	for cur.Next(ctx) {
+		var TagUser tag.TagUser
+		err := cur.Decode(&TagUser)
+		if err != nil {
+			return nil, err
+		}
+		result = append(result, TagUser.Tag)
+	}
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
 }

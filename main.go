@@ -9,6 +9,7 @@ import (
 	"tgbot/internal/consumer/event_consumer"
 	"tgbot/internal/events/telegram"
 	"tgbot/internal/modules/notification"
+	tagall "tgbot/internal/modules/tag_all"
 	mongodb "tgbot/internal/storage/mongo_db"
 	"time"
 
@@ -26,7 +27,7 @@ const (
 var ErrTokenNotExist = errors.New("the env [TG_TOKEN] does not exist")
 
 func main() {
-	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 24*time.Hour)
 	defer cancel()
 
 	if err := godotenv.Load(); err != nil {
@@ -61,14 +62,15 @@ func main() {
 		log.Fatal("", ErrTokenNotExist)
 	}
 	tgClient := tgclient.NewClient(tgBotHost, token, repo)
+	tagAll := tagall.NewTagAll(&tgClient, repo)
 	notification := notification.NewNotification(&tgClient, repo)
-	eventsWorker := telegram.NewWorker(&tgClient, notification)
+	eventsWorker := telegram.NewWorker(&tgClient, notification, tagAll)
 
 	log.Print("service started")
 
 	consumer := event_consumer.NewConsumer(eventsWorker, eventsWorker, batchSize)
 
-	if err := consumer.Start(); err != nil {
+	if err := consumer.Start(ctx); err != nil {
 		log.Fatal("service is stopped", err)
 	}
 }
