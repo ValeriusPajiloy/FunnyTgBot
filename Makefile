@@ -21,3 +21,7 @@ run:
 .PHONY: go-build
 go-build:
 	go build -o $(PROJECT_BIN) ./main.go
+
+.PHONY: run
+build:
+	$(PROJECT_BIN)/main
