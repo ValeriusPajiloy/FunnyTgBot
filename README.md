@@ -46,6 +46,7 @@ Exaple:
 
 Answer:
 > го в dota @Valera @Max @Egor @Kolya
+
 ### ---------------------
 ### IN WORK:
 ### ---------------------
