@@ -28,6 +28,7 @@ Result after 45min
 ### ---------------------
 #### Tag all to game module.
 Usage:
+
 For tag all in group:
 > /go *group*
 
