@@ -26,10 +26,9 @@ Result after 45min
 > Сейчас у @Valera понос
 
 ### ---------------------
-### IN TESTING:
-### ---------------------
 #### Tag all to game module.
 Usage:
+
 For tag all in group:
 > /go *group*
 
@@ -47,8 +46,9 @@ Exaple:
 
 Answer:
 > го в dota @Valera @Max @Egor @Kolya
+
 ### ---------------------
-### IN PLANS:
+### IN WORK:
 ### ---------------------
 #### Chinese social ranking
 
