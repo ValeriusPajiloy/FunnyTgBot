@@ -16,12 +16,12 @@ lint: .install-linter
 ## run: run project
 .PHONY: run
 run:
-	echo "Running..."
+	$(PROJECT_BIN)/main
 
 .PHONY: go-build
 go-build:
 	go build -o $(PROJECT_BIN) ./main.go
 
-.PHONY: run
-build:
-	$(PROJECT_BIN)/main
+.PHONY: docker-run
+docker-run:
+	make go-build && sudo docker-compose up --build funnytgbot 
