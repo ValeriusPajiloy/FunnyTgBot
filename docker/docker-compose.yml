@@ -6,7 +6,7 @@ networks:
 
 services:
   funnytgbot:
-    build: ./
+    build: ../
     container_name: funnytgbot
     restart: always
     ports:
