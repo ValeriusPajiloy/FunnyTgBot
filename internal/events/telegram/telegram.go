@@ -3,12 +3,12 @@ package telegram
 import (
 	"context"
 	"errors"
+	"fmt"
 
 	"tgbot/internal/clients/telegram"
 	"tgbot/internal/events"
 	"tgbot/internal/modules/notification"
 	tagall "tgbot/internal/modules/tag_all"
-	"tgbot/lib/e"
 )
 
 var ErrUnknownMessageType = errors.New("UnknownMessageType")
@@ -38,7 +38,7 @@ func NewWorker(tg *telegram.Client, notify *notification.Notification, tagall *t
 func (w *Worker) Fetch(limit int) ([]events.Event, error) {
 	updates, err := w.tg.Updates(w.offset, limit)
 	if err != nil {
-		return nil, e.Wrap("cant Fetch", err)
+		return nil, fmt.Errorf("cant Fetch %s", err)
 	}
 
 	if len(updates) == 0 {
@@ -63,7 +63,7 @@ func (w *Worker) Process(ctx context.Context, event events.Event) error {
 	case events.Message:
 		w.processMessage(ctx, event)
 	case events.Unknown:
-		return e.Wrap("cant Process", ErrUnknownMessageType)
+		return fmt.Errorf("cant Process %s", ErrUnknownMessageType)
 	}
 	return nil
 }
@@ -71,11 +71,11 @@ func (w *Worker) Process(ctx context.Context, event events.Event) error {
 func (w *Worker) processMessage(ctx context.Context, event events.Event) error {
 	meta, err := meta(event)
 	if err != nil {
-		return e.Wrap("cant processMessage ", err)
+		return fmt.Errorf("cant processMessage %s", err)
 	}
 
 	if err := w.doCommand(ctx, event, meta); err != nil {
-		return e.Wrap("cant processMessage", err)
+		return fmt.Errorf("cant processMessage %s", err)
 	}
 	return nil
 }
@@ -83,7 +83,7 @@ func (w *Worker) processMessage(ctx context.Context, event events.Event) error {
 func meta(event events.Event) (Meta, error) {
 	res, ok := event.Meta.(Meta)
 	if !ok {
-		return Meta{}, e.Wrap("cant meta ", ErrUnknownMetaType)
+		return Meta{}, fmt.Errorf("cant meta %s", ErrUnknownMetaType)
 	}
 	return res, nil
 }

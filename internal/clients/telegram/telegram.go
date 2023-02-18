@@ -2,13 +2,13 @@ package telegram
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
 	"net/url"
 	"path"
 	"strconv"
 	mongodb "tgbot/internal/storage/mongo_db"
-	"tgbot/lib/e"
 )
 
 const (
@@ -42,7 +42,7 @@ func (c *Client) SendMessage(chatID int, text string) error {
 	q.Add("text", text)
 	_, err := c.doRequest(sendMessageMethod, q)
 	if err != nil {
-		return e.Wrap("cant SendMessage ", err)
+		return fmt.Errorf("cant SendMessage %s", err)
 	}
 	return nil
 }
@@ -55,13 +55,13 @@ func (c *Client) Updates(offset int, limit int) ([]Update, error) {
 
 	data, err := c.doRequest(getUpdatesMethod, q)
 	if err != nil {
-		return nil, e.Wrap("cant Updates ", err)
+		return nil, fmt.Errorf("cant Updates %s", err)
 	}
 
 	var res UpdatesResponse
 
 	if err := json.Unmarshal(data, &res); err != nil {
-		return nil, e.Wrap("cant Updates ", err)
+		return nil, fmt.Errorf("cant Updates %s", err)
 	}
 	return res.Result, nil
 }
@@ -79,19 +79,19 @@ func (c *Client) doRequest(method string, query url.Values) ([]byte, error) {
 
 	req, err := http.NewRequest(http.MethodGet, url.String(), nil)
 	if err != nil {
-		return nil, e.Wrap("cant do request ", err)
+		return nil, fmt.Errorf("cant do request %s", err)
 	}
 
 	req.URL.RawQuery = query.Encode()
 
 	resp, err := c.client.Do(req)
 	if err != nil {
-		return nil, e.Wrap("cant do request ", err)
+		return nil, fmt.Errorf("cant do request %s", err)
 	}
 
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return nil, e.Wrap("cant do request ", err)
+		return nil, fmt.Errorf("cant do request %s", err)
 	}
 
 	return body, nil
