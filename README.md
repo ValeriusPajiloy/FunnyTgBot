@@ -1,70 +1,52 @@
+[ru](README_RU.md)
 # Funny Telegram Bot
 A simple pet project for learning the Go language. 
-Telegram bot with rofl functionality
-## -------------------------------------------------
-### READY:
-### ---------------------
-#### Notification module.
-Funny notification image like magik spells.
-Use
-> /колдую SPELL TIME TARGET 
+Telegram bot with funny functionality
 
-After the specified TIME of minutes bot write:
-> Сейчас у TARGET SPELL
+Realized
+1. [X] [Timer notification.](#notification)  
+2. [X] [Tag all group.](#tagAllGroup) 
+3. [X] [Chinese social ranking.](#ChineseSocialRanking)  
+4. [ ] [Random picture.](#RandomPicture)
+___
+## Modules:
+<a name="notification"><h3>1. Timer notification.</h3></a>
+Funny notifications that look like magic spells.
 
-Also bot will be notify about SPELL on 30 min, 15 min, 5 min and every 5 last min before spell time like:
-> SPELL у TARGET через 30 минут
+You can set a timer for a spell by specifying a target
 
-##### Example
-Use:
-> /колдую понос 45 @Valera
+[More](en/NOTIFICATION.md)
+___
+<a name="tagAllGroup"><h3>2. Tag all groupe.</h3></a>
+There is no way to use @all in telegram.
 
-Result after 15min
-> понос у @Valera через 30 минут
+This module allows you to create groups, add users there and tag the entire group with one message
 
-Result after 45min
-> Сейчас у @Valera понос
+The module was made in order to collect a group in the game, so the syntax looks like this:
+`/go dota`
 
-### ---------------------
-#### Tag all to game module.
-Usage:
-
-For tag all in group:
-> /go *group*
-
-Add new group:
-> /go addgroup *group*
-	
-Get all groups for chat
-> /go groups
-
-Add users in group:
-> /go add *group* *userTag*(maybe more one)`
-
-Exaple:
-> /go dota
-
-Answer:
-> го в dota @Valera @Max @Egor @Kolya
-
-### ---------------------
-### IN WORK:
-### ---------------------
-#### Chinese social ranking
-
+[More](en/TAG_ALL_GROUP.md)
+___
+<a name="ChineseSocialRanking"><h3>3. Chinese social ranking</h3></a>
 The idea is to store a rating for each user.
 
 When a user writes messages that combine good words and the word China, the party - the rating goes up.
 When a user writes a message that combines bad words and the words China, the party, the rating goes down.
 
-on the /rating command, the bot displays the user's rating.
+on the `/rank` command, the bot displays the user's rating.
 
-## -------------------------------------------------
+[More](en/SOCIAL_RANKING.md)
+___
+<a name="RandomPicture"><h3>4. Random picture</h3></a>
+The module allows you to create "themes", and add pictures to these themes.
+After that, when using `/theme_name`, the bot will send a random picture added to this topic
+
+___
 Many thanks to Nikolai Tuzov, I learned a lot from his "Telegram Bot in Golang" playlist, examples of links below
 
 https://www.youtube.com/playlist?list=PLFAQFisfyqlWDwouVTUztKX2wUjYQ4T3l
 
 https://github.com/GolangLessons/Read-Adviser-Bot/tree/lessons
 
-Ideas, suggestions and advice read here: https://t.me/PajiloyValera
+Ideas, suggestions and advice write here: https://t.me/PajiloyValera
 
