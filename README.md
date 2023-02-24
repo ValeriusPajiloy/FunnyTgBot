@@ -15,7 +15,7 @@ Funny notifications that look like magic spells.
 
 You can set a timer for a spell by specifying a target
 
-[More](en/NOTIFICATION.md)
+[More](docs/en/NOTIFICATION.md)
 ___
 <a name="tagAllGroup"><h3>2. Tag all groupe.</h3></a>
 There is no way to use @all in telegram.
@@ -25,7 +25,7 @@ This module allows you to create groups, add users there and tag the entire grou
 The module was made in order to collect a group in the game, so the syntax looks like this:
 `/go dota`
 
-[More](en/TAG_ALL_GROUP.md)
+[More](docs/en/TAG_ALL_GROUP.md)
 ___
 <a name="ChineseSocialRanking"><h3>3. Chinese social ranking</h3></a>
 The idea is to store a rating for each user.
@@ -35,7 +35,7 @@ When a user writes a message that combines bad words and the words China, the pa
 
 on the `/rank` command, the bot displays the user's rating.
 
-[More](en/SOCIAL_RANKING.md)
+[More](docs/en/SOCIAL_RANKING.md)
 ___
 <a name="RandomPicture"><h3>4. Random picture</h3></a>
 The module allows you to create "themes", and add pictures to these themes.

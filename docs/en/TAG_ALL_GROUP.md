@@ -35,4 +35,4 @@ Answer:
 > го в dota @Valera @Max @Egor @Kolya
 ___
 
-[Back](../README.md)
+[Back](../../README.md)

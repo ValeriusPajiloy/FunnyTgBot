@@ -16,7 +16,7 @@ ___
 
 Вы можете установить таймер для заклинания, указав цель
 
-[Подробнее](ru/NOTIFICATION.md)
+[Подробнее](docs/ru/NOTIFICATION.md)
 ___
 <a name="tagAllGroup"><h3>2. Tag all groupe.</h3></a>
 В телеграмме нельзя использовать @all.
@@ -26,7 +26,7 @@ ___
 Модуль сделан для того, чтобы собрать группу в игре, поэтому синтаксис выглядит так:
 `/go dota`
 
-[Подробнее](ru/TAG_ALL_GROUP.md)
+[Подробнее](docs/ru/TAG_ALL_GROUP.md)
 ___
 <a name="ChineseSocialRanking"><h3>3. Chinese social ranking</h3></a>
 Идея состоит в том, чтобы хранить рейтинг для каждого пользователя.
@@ -36,7 +36,7 @@ ___
 
 По команде `/rank` бот отображает рейтинг пользователя.
 
-[Подробнее](ru/SOCIAL_RANKING.md)
+[Подробнее](docs/ru/SOCIAL_RANKING.md)
 ___
 <a name="RandomPicture"><h3>4. Random picture</h3></a>
 Модуль позволяет создавать «темы» и добавлять в эти темы картинки.
