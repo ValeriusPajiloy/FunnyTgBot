@@ -6,7 +6,7 @@ Telegram-бот с забавным функционалом.
 Реализовано
 1. [X] [Timer notification.](#notification)  
 2. [X] [Tag all group.](#tagAllGroup) 
-3. [X] [Chinese social ranking.](#ChineseSocialRanking)  
+3. [ ] [Chinese social ranking.](#ChineseSocialRanking)  
 4. [ ] [Random picture.](#RandomPicture)
 
 ___
