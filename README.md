@@ -3,7 +3,6 @@
 A simple pet project for learning the Go language. 
 Telegram bot with funny functionality
 
-
 Realized
 1. [X] [Timer notification.](#notification)  
 2. [X] [Tag all group.](#tagAllGroup) 
